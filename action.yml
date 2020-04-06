@@ -1,0 +1,25 @@
+name: "Hugo on GH Pages"
+description: "A Github action build a Hugo site from a branch `hugo-raw` and then deploy it to `master` branch"
+author: "Nasir Hussain (https://nasirhussain.tech)"
+
+branding:
+  icon: 'arrow-up-right'
+  color: 'gray-dark'
+  label: 'Hugo On GH Pages'
+
+inputs:
+  github_token:
+    description: "Github token is used to get access to your github account and push the code into your desired repository and after obtaining, You can generate it here, https://github.com/settings/tokens & set it in Github Secrets as GITHUB_USERNAME variable."
+    required: true
+  github_repo:
+    description: "Github repo is used to define at what destination you would like to push your built code by Hugo, set it in Github Secrets as GITHUB_REPO [Provide the name of the repo along with the username : <username>/<repo_name>]"
+    required: true
+  github_branch:
+    description: "Github branch specifies which branch would you like to deploy it [Optional, if not defined, Branch: Master would be used]"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.github_token }}
+    - ${{ inputs.github_repo }}
+    - ${{ inputs.github_branch }}
